@@ -3,6 +3,11 @@ import datetime
 import matplotlib.pyplot as plt
 from matplotlib import style
 
+""" geobalanced_pairs.py
+
+Monte-Carlo to estimate volume of specific subsets of the order polytope.
+
+"""
 
 def check_epsilon(epsilon, compare_func, n, dimension):
     """ Estimates the volume of a subset of the order polytope
@@ -91,9 +96,9 @@ if __name__ == "__main__":
     steps = 100
     n = 10000
     dimension = 12
+
     f = comp_func
 
-    # Matplotlib stuff
     style.use('fivethirtyeight')
     plt.ion()
     fig, ax = plt.subplots(figsize=(20, 20))
@@ -112,18 +117,19 @@ if __name__ == "__main__":
     ax.set_xlim((.5, 0))
     ax.set_ylim((0, 1))
     points = []
+
     for i in [(k+1)/(2*steps+1) for k in range(steps)][::-1]:
         point = np.array([i, check_epsilon(i, f, n, dimension)])
-        array = plot.get_offsets()
-        array = np.append(array, point)
-        if array.ndim == 1:
-            array = np.reshape(array, (-1, 2))
-        plot.set_offsets(array)
+        ratios = plot.get_offsets()
+        ratios = np.append(ratios, point)
+        if ratios.ndim == 1:
+            ratios = np.reshape(ratios, (-1, 2))
+        plot.set_offsets(ratios)
         fig.canvas.draw()
-        ax.set_xlim(array[:, 0].max() + .01, array[:, 0].min()-.01)
-        ax.set_ylim(array[:, 1].min() - .01, array[:, 1].max()+.01)
+        ax.set_xlim(ratios[:, 0].max() + .01, ratios[:, 0].min()-.01)
+        ax.set_ylim(ratios[:, 1].min() - .01, ratios[:, 1].max()+.01)
 
     fig.savefig(datetime.datetime.now().strftime('%I%MW%m%d%Y')+".png",
                 facecolor=fig.get_facecolor(), edgecolor='none')
     plt.ioff()
-plt.show()
+    plt.show()
