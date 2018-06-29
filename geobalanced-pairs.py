@@ -9,6 +9,12 @@ Monte-Carlo to estimate volume of specific subsets of the order polytope.
 
 """
 
+# Copyright (c) 2018 Juniper Overbeck
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 def check_epsilon(epsilon, compare_func, n, dimension):
     """ Estimates the volume of a subset of the order polytope
 
